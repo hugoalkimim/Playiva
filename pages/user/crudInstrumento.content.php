@@ -8,7 +8,12 @@ if (isset($_POST['btn'])) {
 
 if (isset($_GET['idRemover'])) {
     require_once 'crudInstrumento.php';
-    $removerinstrumento = removerInstrumento('idRemover');
+    $removerinstrumento = removerInstrumento($idRemover = filter_input(INPUT_GET, 'idRemover', FILTER_VALIDATE_INT));
+}
+
+if (isset($_GET['idAtualizar'])) {
+    $id = filter_input(INPUT_GET, 'idAtualizar', FILTER_VALIDATE_INT);
+    header("Location: updateInstrumento.content.php?id=".$id);
 }
 ?>
 
@@ -47,8 +52,9 @@ if (isset($_GET['idRemover'])) {
                         $saida .= '<tr>';
                         $idInstrumento = $instrumento['id'];
                         $nomeInstrumento = $instrumento['name'];
+                        $saida .= "<td>$idInstrumento</td>";
                         $saida .= "<td>$nomeInstrumento</td>";
-                        $saida .= "<td><a href=crudInstrumento.php?idAlterar=".$idInstrumento.">Alterar</a></td>";
+                        $saida .= "<td><a href=crudInstrumento.php?idAtualizar=".$idInstrumento.">Alterar</a></td>";
                         $saida .= "<td><a href=crudInstrumento.php?idRemover=".$idInstrumento.">Remover</a></td>";
                     }
 

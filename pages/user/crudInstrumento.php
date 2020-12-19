@@ -15,7 +15,7 @@ function cadastroinstrumento($name){
     session_start();
     $failed = [
         'status' => false,
-        'message' => 'Falha ao registrar'
+        'message' => 'Falha ao cadastrar'
     ];
     
     $instrument = R::dispense('instrument');
@@ -26,7 +26,7 @@ function cadastroinstrumento($name){
     return [
         'status' => true,
         $_SESSION['name'] = $name,
-        header("Location: playiva/pages/user/crudInstrumento.php"), 
+        header("Location: crudInstrumento.php"), 
         exit()
     ];
 }
@@ -39,9 +39,24 @@ function removerInstrumento($idRemover){
     return [
         'status' => true,
         $_SESSION['idRemover'] = $idRemover,
-        header("Location: playiva/pages/user/crudInstrumento.php"), 
+        header("Location: crudInstrumento.php"), 
         exit()
     ];
 }
+
+function atualizarInstrumento($idAtualizacao, $nome){
+    session_start();
+    $instrumento = R::load('instrument', $idAtualizacao);
+    $instrumento -> name = $nome;
+    R::store($instrumento);
+    R::close();
+    return [
+        'status' => true,
+        $_SESSION['idAtualizar'] = $idRemover,
+        header("Location: crudInstrumento.php"), 
+        exit()
+    ];
+}
+
 
 include '../template/template.php';
